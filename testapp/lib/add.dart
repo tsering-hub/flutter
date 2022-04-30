@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:testapp/arithmatic.dart';
+
+import 'outputscreen.dart';
 
 class MeroScreen extends StatefulWidget {
   const MeroScreen({Key? key}) : super(key: key);
@@ -18,27 +21,32 @@ class _MeroScreenState extends State<MeroScreen> {
   int result = 0;
 
   _calculate() {
+    Arithmetic arithmetic = Arithmetic(
+        int.parse(first_controller.text), int.parse(second_controller.text));
     if (group == 'add') {
       setState(() {
-        result = int.parse(first_controller.text) +
-            int.parse(second_controller.text);
+        result = arithmetic.add();
       });
     } else if (group == 'subtract') {
       setState(() {
-        result = int.parse(first_controller.text) -
-            int.parse(second_controller.text);
+        result = arithmetic.sub();
       });
     } else if (group == 'multiply') {
       setState(() {
-        result = int.parse(first_controller.text) *
-            int.parse(second_controller.text);
+        result = arithmetic.mul();
       });
     } else if (group == 'division') {
       setState(() {
-        result = int.parse(first_controller.text) ~/
-            int.parse(second_controller.text);
+        result = arithmetic.div();
       });
     }
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => OutputScreen(
+            result: result,
+          ),
+        ));
   }
 
   @override
@@ -161,7 +169,7 @@ class _MeroScreenState extends State<MeroScreen> {
               const SizedBox(
                 height: 8,
               ),
-              Text("Result: $result")
+              // Text("Result: $result")
             ],
           ),
         ),
